@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports - SkillPath</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          animation: {
+            'fade-in-up': 'fadeInUp 0.5s ease-out',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(10px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Premium Design System: Midnight Glass (Dark) */
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+    body {
+      background-color: #0f172a;
+      background-image:
+        radial-gradient(at 0% 0%, rgba(49, 46, 129, 0.2) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(88, 28, 135, 0.2) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(15, 23, 42, 0.2) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(15, 23, 42, 0.2) 0px, transparent 50%);
+      background-attachment: fixed;
+      background-size: cover;
+      color: #f1f5f9;
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .sidebar {
+      background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-item {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      color: #94a3b8;
+      font-weight: 500;
+      border-radius: 0.75rem;
+      margin: 0.25rem 0.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      background: rgba(99, 102, 241, 0.15);
+      color: #ffffff;
+      backdrop-filter: blur(4px);
+    }
+
+    .nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10%;
+      bottom: 10%;
+      width: 3px;
+      background: #6366f1;
+      border-radius: 0 4px 4px 0;
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+    }
+
+    .card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.3),
+        0 10px 15px -3px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+      border-radius: 1.25rem;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+      color: #f8fafc;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      background: rgba(30, 41, 59, 0.85);
+      box-shadow:
+        0 20px 25px -5px rgba(0, 0, 0, 0.3),
+        0 10px 10px -5px rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-secondary {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+      border-radius: 0.75rem;
+      padding: 0.5rem 1rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.3);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(148, 163, 184, 0.5);
+    }
+
+    /* Text Utilities Override */
+    .text-slate-900 {
+      color: #f8fafc !important;
+    }
+
+    .text-slate-500 {
+      color: #94a3b8 !important;
+    }
+
+    .bg-white {
+      background-color: rgba(30, 41, 59, 0.9) !important;
+    }
+
+    .border-slate-200,
+    .border-slate-100 {
+      border-color: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .bg-slate-50 {
+      background-color: transparent !important;
+    }
+  </style>
+</head>
+
+<body data-page="reports" class="flex h-screen overflow-hidden text-slate-200">
+
+  <!-- Sidebar -->
+  <aside class="w-72 sidebar flex flex-col z-20 hidden md:flex shadow-2xl relative">
+    <div class="absolute top-0 left-0 w-full h-32 bg-indigo-500/10 blur-3xl pointer-events-none"></div>
+
+    <div class="p-8 border-b border-slate-700/50 relative z-10">
+      <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white text-lg">S</div>
+        SkillPath
+      </h1>
+    </div>
+    <nav class="flex-1 px-4 py-8 space-y-2 overflow-y-auto">
+      <a href="dashboard.html" class="nav-item flex items-center px-4 py-3.5 text-sm">
+        <span class="mr-3 text-lg opacity-80">▣</span>
+        Dashboard
+      </a>
+      <a href="skills.html" class="nav-item flex items-center px-4 py-3.5 text-sm">
+        <span class="mr-3 text-lg opacity-80">⚡</span>
+        Skills
+      </a>
+      <a href="milestones.html" class="nav-item flex items-center px-4 py-3.5 text-sm">
+        <span class="mr-3 text-lg opacity-80">⚑</span>
+        Milestones
+      </a>
+      <a href="reports.html" class="nav-item active flex items-center px-4 py-3.5 text-sm">
+        <span class="mr-3 text-lg opacity-80">📈</span>
+        Reports
+      </a>
+      <a href="profile.html" class="nav-item flex items-center px-4 py-3.5 text-sm">
+        <span class="mr-3 text-lg opacity-80">👤</span>
+        Profile
+      </a>
+    </nav>
+
+    <!-- User Status -->
+    <div class="p-6 border-t border-slate-700/50 bg-slate-900/50">
+      <div class="flex items-center space-x-3 p-2 rounded-xl hover:bg-white/5 transition cursor-pointer">
+        <div
+          class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm ring-2 ring-white/10 shadow-lg user-avatar-display">
+          U</div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium text-white truncate user-name-display">User Account</p>
+          <p class="text-xs text-indigo-300 truncate">Pro Member</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 relative overflow-y-auto">
+    <header
+      class="sticky top-0 z-10 bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50 px-8 py-5 flex justify-between items-center shadow-sm">
+      <h2 class="text-xl font-bold text-white tracking-tight">Analytics Reports</h2>
+      <button id="viewAllReportsBtn" class="btn-secondary text-sm">
+        ↓ Export Data
+      </button>
+    </header>
+
+    <div class="p-8 max-w-7xl mx-auto space-y-8">
+      <!-- Header Info -->
+      <div class="flex justify-between items-center">
+        <div>
+          <h1 class="text-2xl font-bold text-white">Performance Overview</h1>
+          <p class="text-slate-400 mt-1">Deep dive into your learning metrics and milestones.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Chart 1: Skills Breakdown -->
+        <div class="card p-8">
+          <h3 class="text-base font-bold text-slate-900 mb-6 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-500 rounded-full"></span>
+            Skill Proficiency
+          </h3>
+          <div class="h-64 flex justify-center w-full relative">
+            <canvas id="skillsChart" class="w-full"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 2: Milestone Completion -->
+        <div class="card p-8">
+          <h3 class="text-base font-bold text-slate-900 mb-6 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-500 rounded-full"></span>
+            Milestone Status
+          </h3>
+          <div class="h-64 flex justify-center w-full relative">
+            <canvas id="milestonesChart" class="w-full"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Insight Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="card p-6 border-t-4 border-indigo-500">
+          <h4 class="text-xs font-bold text-indigo-600 uppercase tracking-wide mb-2">Most Productive Day</h4>
+          <p class="text-3xl font-bold text-slate-900">Wednesday</p>
+          <p class="text-xs text-slate-400 mt-1">Based on recent activity</p>
+        </div>
+        <div class="card p-6 border-t-4 border-emerald-500">
+          <h4 class="text-xs font-bold text-emerald-600 uppercase tracking-wide mb-2">Top Category</h4>
+          <p class="text-3xl font-bold text-slate-900">Frontend</p>
+          <p class="text-xs text-slate-400 mt-1">Highest proficiency score</p>
+        </div>
+        <div class="card p-6 border-t-4 border-amber-500">
+          <h4 class="text-xs font-bold text-amber-600 uppercase tracking-wide mb-2">Current Streak</h4>
+          <p class="text-3xl font-bold text-slate-900">5 Days</p>
+          <p class="text-xs text-slate-400 mt-1">Keep it up!</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Firebase & App -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

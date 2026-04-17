@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - SkillPath</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          animation: {
+            'fade-in-up': 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Premium Design System: Midnight Glass (Dark) */
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+    body {
+      background-color: #0f172a;
+      background-image:
+        radial-gradient(at 0% 0%, rgba(49, 46, 129, 0.2) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(88, 28, 135, 0.2) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(15, 23, 42, 0.2) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(15, 23, 42, 0.2) 0px, transparent 50%);
+      background-attachment: fixed;
+      background-size: cover;
+      color: #f1f5f9;
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .glass-card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow:
+        0 20px 25px -5px rgba(0, 0, 0, 0.3),
+        0 10px 10px -5px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+      border-radius: 1.5rem;
+      color: #f8fafc;
+    }
+
+    .form-input {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.75rem;
+      padding: 0.75rem 1rem;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      color: #f8fafc;
+      transition: all 0.2s;
+    }
+
+    .form-input:focus {
+      background: rgba(30, 41, 59, 1);
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+      outline: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+      color: white;
+      border-radius: 0.75rem;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      box-shadow: 0 4px 6px rgba(79, 70, 229, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .logo-gradient {
+      background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+  </style>
+</head>
+
+<body data-page="auth" class="min-h-screen flex items-center justify-center p-4">
+
+  <div class="glass-card w-full max-w-md p-8 animate-fade-in-up">
+
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold tracking-tight text-white mb-2">SkillPath<span class="text-indigo-500">.</span>
+      </h1>
+      <p class="text-slate-400 text-sm">Welcome back. Please enter your details.</p>
+    </div>
+
+    <!-- Tab Switcher -->
+    <div class="flex p-1 bg-slate-800/50 rounded-lg mb-8 border border-white/5">
+      <button id="loginTab"
+        class="flex-1 py-2 text-sm font-medium rounded-md bg-slate-700 text-white shadow-sm transition-all"
+        onclick="switchTab('login')">Log In</button>
+      <button id="signupTab"
+        class="flex-1 py-2 text-sm font-medium rounded-md text-slate-400 hover:text-slate-200 transition-all"
+        onclick="switchTab('signup')">Sign Up</button>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm" class="space-y-5">
+      <div>
+        <label class="block text-sm font-medium text-slate-300 mb-1">Email</label>
+        <input type="email" id="loginEmail" class="form-input" placeholder="name@company.com" required>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-300 mb-1">Password</label>
+        <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required>
+        <div class="flex justify-end mt-1">
+          <a href="#" class="text-xs text-indigo-400 hover:text-indigo-300 font-medium">Forgot password?</a>
+        </div>
+      </div>
+      <button type="submit" class="btn-primary w-full">
+        Sign In
+      </button>
+    </form>
+
+    <!-- Signup Form -->
+    <form id="signupForm" class="space-y-5 hidden">
+      <div>
+        <label class="block text-sm font-medium text-slate-300 mb-1">Full Name</label>
+        <input type="text" id="signupName" class="form-input" placeholder="John Doe" required>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-300 mb-1">Email</label>
+        <input type="email" id="signupEmail" class="form-input" placeholder="name@company.com" required>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-300 mb-1">Password</label>
+        <input type="password" id="signupPassword" class="form-input" placeholder="Create a password" required>
+      </div>
+      <button type="submit" class="btn-primary w-full">
+        Create Account
+      </button>
+    </form>
+
+    <div class="mt-8 pt-6 border-t border-slate-700/50 text-center">
+      <p class="text-xs text-slate-500">© 2025 SkillPath Inc. All rights reserved.</p>
+    </div>
+  </div>
+
+  <!-- Firebase & App -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="app.js"></script>
+
+  <script>
+    function switchTab(tab) {
+      const loginForm = document.getElementById('loginForm');
+      const signupForm = document.getElementById('signupForm');
+      const loginTab = document.getElementById('loginTab');
+      const signupTab = document.getElementById('signupTab');
+
+      if (tab === 'login') {
+        loginForm.classList.remove('hidden');
+        signupForm.classList.add('hidden');
+        loginTab.className = "flex-1 py-2 text-sm font-medium rounded-md bg-slate-700 text-white shadow-sm transition-all";
+        signupTab.className = "flex-1 py-2 text-sm font-medium rounded-md text-slate-400 hover:text-slate-200 transition-all";
+      } else {
+        loginForm.classList.add('hidden');
+        signupForm.classList.remove('hidden');
+        signupTab.className = "flex-1 py-2 text-sm font-medium rounded-md bg-slate-700 text-white shadow-sm transition-all";
+        loginTab.className = "flex-1 py-2 text-sm font-medium rounded-md text-slate-400 hover:text-slate-200 transition-all";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const loginForm = document.getElementById('loginForm');
+      const signupForm = document.getElementById('signupForm');
+
+      loginForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        const btn = loginForm.querySelector('button');
+        const originalText = btn.innerText;
+        btn.innerText = "Signing in...";
+        btn.disabled = true;
+
+        firebase.auth().signInWithEmailAndPassword(email, password)
+          .then(() => window.location.href = "dashboard.html")
+          .catch((error) => {
+            btn.innerText = originalText;
+            btn.disabled = false;
+            alert("Error: " + error.message);
+          });
+      });
+
+      signupForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('signupName').value;
+        const email = document.getElementById('signupEmail').value;
+        const password = document.getElementById('signupPassword').value;
+        const btn = signupForm.querySelector('button');
+        const originalText = btn.innerText;
+        btn.innerText = "Creating account...";
+        btn.disabled = true;
+
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            userCredential.user.updateProfile({ displayName: name }).then(() => window.location.href = "dashboard.html");
+          })
+          .catch((error) => {
+            btn.innerText = originalText;
+            btn.disabled = false;
+            alert("Error: " + error.message);
+          });
+      });
+    });
+  </script>
+</body>
+
+</html>

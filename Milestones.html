@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Milestones - SkillPath</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          animation: {
+            'fade-in-up': 'fadeInUp 0.5s ease-out',
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(10px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Premium Design System: Midnight Glass (Dark) */
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+    body {
+      background-color: #0f172a;
+      background-image:
+        radial-gradient(at 0% 0%, rgba(49, 46, 129, 0.2) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(88, 28, 135, 0.2) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(15, 23, 42, 0.2) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(15, 23, 42, 0.2) 0px, transparent 50%);
+      background-attachment: fixed;
+      background-size: cover;
+      color: #f1f5f9;
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .sidebar {
+      background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-item {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      color: #94a3b8;
+      font-weight: 500;
+      border-radius: 0.75rem;
+      margin: 0.25rem 0.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      background: rgba(99, 102, 241, 0.15);
+      color: #ffffff;
+      backdrop-filter: blur(4px);
+    }
+
+    .nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10%;
+      bottom: 10%;
+      width: 3px;
+      background: #6366f1;
+      border-radius: 0 4px 4px 0;
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+    }
+
+    .card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.3),
+        0 10px 15px -3px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+      border-radius: 1.25rem;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+      color: #f8fafc;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      background: rgba(30, 41, 59, 0.85);
+      box-shadow:
+        0 20px 25px -5px rgba(0, 0, 0, 0.3),
+        0 10px 10px -5px rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+      color: white;
+      border-radius: 0.75rem;
+      padding: 0.625rem 1.25rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 8px 16px -4px rgba(79, 70, 229, 0.3);
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .form-input {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.75rem;
+      padding: 0.75rem 1rem;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      color: #f8fafc;
+      transition: all 0.2s;
+    }
+
+    .form-input:focus {
+      background: rgba(30, 41, 59, 1);
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+      outline: none;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.3);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(148, 163, 184, 0.5);
+    }
+
+    /* Text Utilities Override */
+    .text-slate-900 {
+      color: #f8fafc !important;
+    }
+
+    .text-slate-500 {
+      color: #94a3b8 !important;
+    }
+
+    .bg-white {
+      background-color: rgba(30, 41, 59, 0.9) !important;
+    }
+
+    .border-slate-200,
+    .border-slate-100 {
+      border-color: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .bg-slate-50 {
+      background-color: transparent !important;
+    }
+  </style>
+</head>
+
+<body data-page="milestones" class="flex h-screen overflow-hidden text-slate-200">
+
+  <!-- Sidebar -->
+  <aside class="w-72 sidebar flex flex-col z-20 hidden md:flex shadow-2xl relative">
+    <div class="absolute top-0 left-0 w-full h-32 bg-indigo-500/10 blur-3xl pointer-events-none"></div>
+
+    <div class="p-8 border-b border-slate-700/50 relative z-10">
+      <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white text-lg">S</div>
+        SkillPath
+      </h1>
+    </div>
+    <nav class="flex-1 px-4 py-8 space-y-2 overflow-y-auto">
+      <a href="dashboard.html" class="nav-item flex items-center px-4 py-3.5 text-sm">
+        <span class="mr-3 text-lg opacity-80">▣</span>
+        Dashboard
+      </a>
+      <a href="skills.html" class="nav-item flex items-center px-4 py-3.5 text-sm">
+        <span class="mr-3 text-lg opacity-80">⚡</span>
+        Skills
+      </a>
+      <a href="milestones.html" class="nav-item active flex items-center px-4 py-3.5 text-sm">
+        <span class="mr-3 text-lg opacity-80">⚑</span>
+        Milestones
+      </a>
+      <a href="reports.html" class="nav-item flex items-center px-4 py-3.5 text-sm">
+        <span class="mr-3 text-lg opacity-80">📈</span>
+        Reports
+      </a>
+      <a href="profile.html" class="nav-item flex items-center px-4 py-3.5 text-sm">
+        <span class="mr-3 text-lg opacity-80">👤</span>
+        Profile
+      </a>
+    </nav>
+
+    <!-- User Status -->
+    <div class="p-6 border-t border-slate-700/50 bg-slate-900/50">
+      <div class="flex items-center space-x-3 p-2 rounded-xl hover:bg-white/5 transition cursor-pointer">
+        <div
+          class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm ring-2 ring-white/10 shadow-lg user-avatar-display">
+          U</div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium text-white truncate user-name-display">User Account</p>
+          <p class="text-xs text-indigo-300 truncate">Pro Member</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 relative overflow-y-auto">
+    <header
+      class="sticky top-0 z-10 bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50 px-8 py-5 flex justify-between items-center shadow-sm">
+      <h2 class="text-xl font-bold text-white tracking-tight">Milestones</h2>
+      <button id="addMilestoneBtn" class="btn-primary text-sm shadow-xl shadow-indigo-500/20">
+        + Init Target
+      </button>
+    </header>
+
+    <div class="p-8 max-w-5xl mx-auto space-y-6">
+      <!-- Header Info -->
+      <div class="flex justify-between items-center">
+        <div>
+          <h1 class="text-2xl font-bold text-white">Roadmap</h1>
+          <p class="text-slate-400 mt-1">Set clear targets to accelerate your learning path.</p>
+        </div>
+      </div>
+
+      <!-- Milestones List -->
+      <div id="milestonesList" class="space-y-4">
+        <!-- Dynamic -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Add Milestone Modal -->
+  <div id="addMilestoneModal"
+    class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+    <div class="card p-8 w-full max-w-md animate-fade-in-up bg-white shadow-2xl">
+      <div class="flex justify-between items-start mb-6">
+        <div>
+          <h3 class="text-xl font-bold text-slate-900">Set New Milestone</h3>
+          <p class="text-slate-500 text-sm mt-1">What is your next big goal?</p>
+        </div>
+        <button id="closeModalBtn" class="text-slate-400 hover:text-slate-600 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <form id="addMilestoneForm" class="space-y-5">
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-2">Milestone Title</label>
+          <input type="text" id="msTitle" class="form-input" placeholder="e.g. Complete React Certification" required>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-2">Due Date</label>
+          <input type="date" id="msDate" class="form-input text-slate-600" required>
+        </div>
+
+        <div class="pt-4">
+          <button type="submit"
+            class="w-full py-3 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-xl hover:shadow-lg hover:shadow-indigo-500/30 transition font-semibold text-sm">
+            Set Target
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase & App -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
